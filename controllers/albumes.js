@@ -102,7 +102,7 @@ const updateAlbum = async (req, res) => {
         {
             const[results,fields] = await conn.query
             (
-                'UPDATE albumes nombre = ?, artista = ? WHERE id = ?',
+                'UPDATE albumes SET nombre = ?, artista = ? WHERE id = ?',
                 ['nombre', 'artista', 'id']
             );
             return results;

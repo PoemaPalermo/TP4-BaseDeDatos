@@ -93,7 +93,7 @@ const updateArtista = async (req, res) => {
         {
             const[results,fields] = await conn.query
             (
-                'UPDATE artistas nombre = ? WHERE id = ?',
+                'UPDATE artistas SET nombre = ? WHERE id = ?',
                 ['nombre', 'id']
             );
             return results;
