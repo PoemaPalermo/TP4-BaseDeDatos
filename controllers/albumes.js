@@ -98,17 +98,56 @@ const updateAlbum = async (req, res) => {
             "artista": "Id del artista"
         }
     */
+        try
+        {
+            const[results,fields] = await conn.query
+            (
+                'UPDATE albumes SET id = ?, nombre = ?, artista = ? WHERE id = ?',
+                ['id', 'nombre', 'artista', 'id']
+            );
+            return results;
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
 };
 
 const deleteAlbum = async (req, res) => {
     // Completar con la consulta que elimina un album
     // Recordar que los parámetros de una consulta DELETE se encuentran en req.params
+    try
+        {
+            const[results,fields] = await conn.query
+            (
+                'DELETE FROM albumes WHERE id = ?',
+                ['id']
+            );
+            return results;
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
 };
 
 const getCancionesByAlbum = async (req, res) => {
     // Completar con la consulta que devuelve las canciones de un album
     // Recordar que los parámetros de una consulta GET se encuentran en req.params
     // Deberían devolver los datos de la misma forma que getCanciones
+    try
+        {
+            const[results,fields] = await conn.query
+            (
+                'SELECT * FROM canciones JOIN albumes ON canciones.album = albumes.id WHERE albumes.id = ? ',
+                ['id']
+            );
+            return results;
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
 };
 
 const albumes = {
