@@ -77,9 +77,9 @@ const createAlbum = async (req, res) => {
             const[results,fields] = await conn.query
             (
                 'INSERT INTO albumes (id, nombre, artista) VALUES (?, ?, ?)',
-                ['id', 'nombre', 'artista']
+                [req.params.id, req.params.nombre, req.params.artista]
             );
-            return results;
+            res.json(results);
         }
         catch(err)
         {
@@ -103,9 +103,9 @@ const updateAlbum = async (req, res) => {
             const[results,fields] = await conn.query
             (
                 'UPDATE albumes SET nombre = ?, artista = ? WHERE id = ?',
-                ['nombre', 'artista', 'id']
+                [req.params.nombre, req.params.artista, req.params.id]
             );
-            return results;
+            res.json(results);
         }
         catch(err)
         {
@@ -121,9 +121,9 @@ const deleteAlbum = async (req, res) => {
             const[results,fields] = await conn.query
             (
                 'DELETE FROM albumes WHERE id = ?',
-                ['id']
+                [req.params.id]
             );
-            return results;
+            res.json(results);
         }
         catch(err)
         {
@@ -140,9 +140,9 @@ const getCancionesByAlbum = async (req, res) => {
             const[results,fields] = await conn.query
             (
                 'SELECT * FROM canciones JOIN albumes ON canciones.album = albumes.id WHERE albumes.id = ? ',
-                ['id']
+                [req.params.id]
             );
-            return results;
+            res.json(results);
         }
         catch(err)
         {

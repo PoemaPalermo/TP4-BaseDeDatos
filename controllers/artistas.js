@@ -70,9 +70,9 @@ const createArtista = async (req, res) => {
             const[results,fields] = await conn.query
             (
                 'INSERT INTO artistas (id, nombre) VALUES (?, ?)',
-                ['id', 'nombre']
+                [req.params.id, req.params.nombre]
             );
-            return results;
+            res.json(results);
         }
         catch(err)
         {
@@ -94,9 +94,9 @@ const updateArtista = async (req, res) => {
             const[results,fields] = await conn.query
             (
                 'UPDATE artistas SET nombre = ?',
-                ['nombre']
+                [req.params.nombre]
             );
-            return results;
+            res.json(results);
         }
         catch(err)
         {
@@ -107,12 +107,38 @@ const updateArtista = async (req, res) => {
 const deleteArtista = async (req, res) => {
     // Completar con la consulta que elimina un artista
     // Recordar que los parámetros de una consulta DELETE se encuentran en req.params
+    try
+        {
+            const[results,fields] = await conn.query
+            (
+                'DELETE FROM artistas WHERE id = ?',
+                [req.params.id]
+            );
+            res.json(results);
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
 };
 
 const getAlbumesByArtista = async (req, res) => {
     // Completar con la consulta que devuelve las canciones de un artista
     // Recordar que los parámetros de una consulta GET se encuentran en req.params
     // Deberían devolver los datos de la misma forma que getAlbumes
+    try
+        {
+            const[results,fields] = await conn.query
+            (
+                'SELECT * FROM albumes JOIN artista ON albumes.artista = artistas.id WHERE artistas.id = ? ',
+                [req.params.id]
+            );
+            res.json(results);
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
 };
 
 const getCancionesByArtista = async (req, res) => {
@@ -120,6 +146,19 @@ const getCancionesByArtista = async (req, res) => {
     // (tener en cuenta que las canciones están asociadas a un álbum, y los álbumes a un artista)
     // Recordar que los parámetros de una consulta GET se encuentran en req.params
     // Deberían devolver los datos de la misma forma que getCanciones
+    try
+    {
+        const[results,fields] = await conn.query
+        (
+            'SELECT * FROM canciones JOIN albumes ON canciones.album = albumes.id JOIN artistas ON albumes.artista = artista.id WHERE artistas.id = ? ',
+            [req.params.id]
+        );
+        res.json(results);
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
 };
 
 const artistas = {
