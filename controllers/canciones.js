@@ -31,7 +31,7 @@ const getCanciones = async (_, res) => {
             (
                 "SELECT * FROM canciones"
             );
-            return results;
+            res.json(results);
         }
         catch(err)
         {
@@ -58,9 +58,9 @@ const getCancion = async (req, res) => {
             const[results,fields] = await conn.query
             (
                 'SELECT * FROM canciones WHERE id = ?',
-                [id]
+                [req.params.id]
             );
-            return results;
+            res.json(results);
         }
         catch(err)
         {
@@ -84,9 +84,9 @@ const createCancion = async (req, res) => {
             const[results,fields] = await conn.query
             (
                 'INSERT INTO canciones (id, nombre, album, duracion, reproducciones) VALUES (?, ?, ?, ?, ?)',
-                ['id', 'nombre', 'album', 'duracion', 'reproducciones']
+                [req.params.id, req.params.nombre, req.params.album, req.params.duracion, req.params.reproducciones]
             );
-            return results;
+            res.json(results);
         }
         catch(err)
         {
@@ -112,9 +112,9 @@ const updateCancion = async (req, res) => {
             const[results,fields] = await conn.query
             (
                 'UPDATE artistas SET nombre = ?, album = ?, duración = ? WHERE id = ?',
-                ['nombre', 'album', 'duracion', 'id']
+                [req.params.nombre, req.params.album, req.params.duracion, req.params.id]
             );
-            return results;
+            res.json(results);
         }
         catch(err)
         {
@@ -130,9 +130,9 @@ const deleteCancion = async (req, res) => {
             const[results,fields] = await conn.query
             (
                 'DELETE FROM canciones WHERE id = ?',
-                ['id']
+                [req.params.id]
             );
-            return results;
+            res.json(results);
         }
         catch(err)
         {
@@ -148,9 +148,9 @@ const reproducirCancion = async (req, res) => {
         const[results,fields] = await conn.query
         (
             'UPDATE canciones SET reproducciones = reproducciones++ WHERE id = ?',
-            ['id']
+            [req.params.id]
         );
-        return results;
+        res.json(results);
     }
     catch(err)
     {

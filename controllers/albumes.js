@@ -26,7 +26,7 @@ const getAlbumes = async (_, res) => {
             (
                 "SELECT * FROM albumes"
             );
-            return results;
+            res.json(results);
         }
         catch(err)
         {
@@ -50,10 +50,10 @@ const getAlbum = async (req, res) => {
         {
             const[results,fields] = await conn.query
             (
-                'SELECT * FROM albumes WHERE id = ´id´ = ?',
-                [id]
+                'SELECT * FROM albumes WHERE id = ?',
+                [req.params.id]
             );
-            return results;
+            res.json(results);
         }
         catch(err)
         {
